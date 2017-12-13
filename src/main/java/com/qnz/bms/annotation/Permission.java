@@ -1,7 +1,5 @@
 package com.qnz.bms.annotation;
 
-import netscape.security.Privilege;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

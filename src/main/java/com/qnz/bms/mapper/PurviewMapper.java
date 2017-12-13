@@ -28,5 +28,5 @@ public interface PurviewMapper {
 
     int updateByPrimaryKey(Purview record);
 
-    List<Purview> selectByRoleId(@Param("roleId") int roleId);
+    List<Purview> selectByRoleId(Integer roleId);
 }
