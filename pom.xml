@@ -145,7 +145,7 @@
                     <fork>true</fork>
                 </configuration>
             </plugin>
-            <!-- mybatis自动生成代码工具
+            <!-- mybatis自动生成代码工具 -->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -180,7 +180,7 @@
                         <version>3.4.5</version>
                     </dependency>
                 </dependencies>
-            </plugin> -->
+            </plugin>
             <!-- mybatis自动生成代码工具 end -->
         </plugins>
 
