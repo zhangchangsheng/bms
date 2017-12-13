@@ -1,0 +1,115 @@
+-- mysql 5.0以上版本
+DROP TABLE IF EXISTS system_user;
+CREATE TABLE system_user (
+  user_id INT(11) NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  role_id INT(11) NOT NULL COMMENT '角色id',
+  add_ip INT(11) UNSIGNED DEFAULT '0' COMMENT '添加ip',
+  username VARCHAR(64) DEFAULT '' COMMENT '登录名称',
+  password VARCHAR(64) DEFAULT '' COMMENT '登录密码',
+  pay_password VARCHAR(64) DEFAULT '' COMMENT '支付密码',
+  realname VARCHAR(32) DEFAULT '' COMMENT '姓名',
+  phone VARCHAR(16) DEFAULT '' COMMENT '手机号码',
+  islock INT(2) DEFAULT 0 COMMENT '0：未锁定 1：永久锁定 2：限时锁定',
+  lock_time DATETIME DEFAULT NULL COMMENT '锁定时间',
+  login_time DATETIME DEFAULT NULL COMMENT '最后登录时间',
+  email VARCHAR(64) DEFAULT NULL COMMENT '邮箱',
+  qq VARCHAR(16) DEFAULT NULL COMMENT 'QQ',
+  login_fail_times INT(2) DEFAULT 0 COMMENT '登录失败次数',
+  deleted INT(1) DEFAULT 0 COMMENT '删除标识:0否,1是',
+  add_time DATETIME NOT NULL COMMENT '添加时间',
+  update_time DATETIME NOT NULL COMMENT '更新时间',
+  PRIMARY KEY (user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台用户表';
+
+DROP TABLE IF EXISTS purview;
+CREATE TABLE purview (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  pid INT(11) DEFAULT NULL COMMENT '上级id',
+  name VARCHAR(200) DEFAULT NULL COMMENT '名称',
+  code VARCHAR(60) DEFAULT NULL COMMENT '权限编码',
+  purview INT(2) DEFAULT 0 COMMENT '权限功能: 0菜单, 1操作',
+  url VARCHAR(200) DEFAULT NULL COMMENT '对应地址',
+  remark VARCHAR(200) DEFAULT NULL COMMENT '备注',
+  sort INT(11) DEFAULT 0 COMMENT '排序',
+  level INT(1) DEFAULT 0 COMMENT '级别',
+  allow_distribute INT(1) DEFAULT NULL COMMENT '是否允许被分配',
+  deleted INT(1) DEFAULT 0 COMMENT '删除标识:0否,1是',
+  add_time DATETIME NOT NULL COMMENT '添加时间',
+  update_time DATETIME NOT NULL COMMENT '更新时间',
+  PRIMARY KEY (id) USING BTREE
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='后台权限表';
+
+DROP TABLE IF EXISTS user_role;
+CREATE TABLE user_role (
+  role_id INT(11) NOT NULL AUTO_INCREMENT,
+  fid INT(11) DEFAULT NULL COMMENT '公司id',
+  name VARCHAR(50) DEFAULT NULL COMMENT '角色名',
+  sort VARCHAR(10) DEFAULT NULL COMMENT '排序',
+  status INT(1) DEFAULT '0' COMMENT '状态: 0可用,1禁用',
+  add_ip INT(11) UNSIGNED DEFAULT '0' COMMENT '添加ip',
+  is_service INT(1) DEFAULT '0' COMMENT '是否客服',
+  code VARCHAR(20) DEFAULT NULL COMMENT '角色对应的唯一码',
+  dept_code VARCHAR(10) DEFAULT NULL COMMENT '部门编码',
+  remark VARCHAR(200) DEFAULT NULL COMMENT '备注',
+  deleted INT(1) DEFAULT 0 COMMENT '删除标识:0否,1是',
+  add_time DATETIME NOT NULL COMMENT '添加时间',
+  update_time DATETIME NOT NULL COMMENT '更新时间',
+  PRIMARY KEY (role_id) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
+
+DROP TABLE IF EXISTS user_role_purview;
+CREATE TABLE user_role_purview (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  user_role_id INT(11) DEFAULT NULL COMMENT '角色id',
+  purview_id INT(11) DEFAULT NULL COMMENT '权限id',
+  PRIMARY KEY (id) USING BTREE,
+  KEY purview_id (purview_id) USING BTREE,
+  KEY user_role_id (user_role_id) USING BTREE
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='后台角色权限表';
+
+DROP TABLE IF EXISTS linkage_type;
+CREATE TABLE linkage_type (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  sort INT(11) DEFAULT NULL COMMENT '排序',
+  name VARCHAR(64) DEFAULT NULL COMMENT '名称',
+  code VARCHAR(64) DEFAULT NULL COMMENT '编码',
+  add_ip INT(11) UNSIGNED DEFAULT '0' COMMENT '添加ip',
+  deleted INT(1) DEFAULT 0 COMMENT '删除标识:0否,1是',
+  add_time DATETIME NOT NULL COMMENT '添加时间',
+  update_time DATETIME NOT NULL COMMENT '更新时间',
+  PRIMARY KEY (id) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='字典类型表';
+
+DROP TABLE IF EXISTS linkage;
+CREATE TABLE linkage (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  status INT(2) DEFAULT NULL COMMENT '状态',
+  sort smallINT(6) DEFAULT NULL COMMENT '排序',
+  type_id INT(11) DEFAULT NULL COMMENT '类型编号',
+  pid smallINT(30) DEFAULT NULL COMMENT '父编号',
+  name VARCHAR(256) DEFAULT NULL COMMENT '名称',
+  value VARCHAR(256) DEFAULT NULL COMMENT '值',
+  add_ip INT(11) UNSIGNED DEFAULT '0' COMMENT '添加ip',
+  deleted INT(1) DEFAULT 0 COMMENT '删除标识:0否,1是',
+  add_time DATETIME NOT NULL COMMENT '添加时间',
+  update_time DATETIME NOT NULL COMMENT '更新时间',
+  PRIMARY KEY (id) USING BTREE,
+  KEY type_id (type_id) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='字典表';
+
+DROP TABLE IF EXISTS area_code;
+CREATE TABLE area_code (
+  id INT(11) NOT NULL AUTO_INCREMENT ,
+  pid INT(11) DEFAULT NULL COMMENT '父id',
+  province VARCHAR(16) DEFAULT NULL COMMENT '省',
+  city VARCHAR(16) DEFAULT NULL COMMENT '市',
+  county VARCHAR(16) DEFAULT NULL  COMMENT '区/县',
+  code VARCHAR(8) DEFAULT NULL COMMENT '编号',
+  pcode VARCHAR(8) DEFAULT NULL COMMENT '上级编号',
+  tcode VARCHAR(8) DEFAULT NULL COMMENT '顶级编号',
+  PRIMARY KEY (id) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='地区对应code';
+
+
+
+

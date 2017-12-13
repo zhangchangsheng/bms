@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qnz.bms.mapper.UserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.qnz.bms.domain.UserRole">
+    <id column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="fid" jdbcType="INTEGER" property="fid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="add_ip" jdbcType="INTEGER" property="addIp" />
+    <result column="is_service" jdbcType="INTEGER" property="isService" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="dept_code" jdbcType="VARCHAR" property="deptCode" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    role_id, fid, name, sort, status, add_ip, is_service, code, dept_code, remark, deleted, 
+    add_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.qnz.bms.domain.UserRoleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qnz.bms.domain.UserRoleExample">
+    delete from user_role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qnz.bms.domain.UserRole">
+    insert into user_role (role_id, fid, name, 
+      sort, status, add_ip, 
+      is_service, code, dept_code, 
+      remark, deleted, add_time, 
+      update_time)
+    values (#{roleId,jdbcType=INTEGER}, #{fid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{addIp,jdbcType=INTEGER}, 
+      #{isService,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{deleted,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qnz.bms.domain.UserRole">
+    insert into user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="fid != null">
+        fid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="addIp != null">
+        add_ip,
+      </if>
+      <if test="isService != null">
+        is_service,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="deptCode != null">
+        dept_code,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="fid != null">
+        #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="addIp != null">
+        #{addIp,jdbcType=INTEGER},
+      </if>
+      <if test="isService != null">
+        #{isService,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="deptCode != null">
+        #{deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qnz.bms.domain.UserRoleExample" resultType="java.lang.Long">
+    select count(*) from user_role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_role
+    <set>
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fid != null">
+        fid = #{record.fid,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null">
+        sort = #{record.sort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.addIp != null">
+        add_ip = #{record.addIp,jdbcType=INTEGER},
+      </if>
+      <if test="record.isService != null">
+        is_service = #{record.isService,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptCode != null">
+        dept_code = #{record.deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=INTEGER},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_role
+    set role_id = #{record.roleId,jdbcType=INTEGER},
+      fid = #{record.fid,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      add_ip = #{record.addIp,jdbcType=INTEGER},
+      is_service = #{record.isService,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      dept_code = #{record.deptCode,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      deleted = #{record.deleted,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qnz.bms.domain.UserRole">
+    update user_role
+    <set>
+      <if test="fid != null">
+        fid = #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="addIp != null">
+        add_ip = #{addIp,jdbcType=INTEGER},
+      </if>
+      <if test="isService != null">
+        is_service = #{isService,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="deptCode != null">
+        dept_code = #{deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qnz.bms.domain.UserRole">
+    update user_role
+    set fid = #{fid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      add_ip = #{addIp,jdbcType=INTEGER},
+      is_service = #{isService,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      dept_code = #{deptCode,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.qnz.bms.domain.UserRole">
+    <id column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="fid" jdbcType="INTEGER" property="fid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sort" jdbcType="VARCHAR" property="sort" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="add_ip" jdbcType="INTEGER" property="addIp" />
+    <result column="is_service" jdbcType="INTEGER" property="isService" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="dept_code" jdbcType="VARCHAR" property="deptCode" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    role_id, fid, name, sort, status, add_ip, is_service, code, dept_code, remark, deleted, 
+    add_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.qnz.bms.domain.UserRoleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qnz.bms.domain.UserRoleExample">
+    delete from user_role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qnz.bms.domain.UserRole">
+    insert into user_role (role_id, fid, name, 
+      sort, status, add_ip, 
+      is_service, code, dept_code, 
+      remark, deleted, add_time, 
+      update_time)
+    values (#{roleId,jdbcType=INTEGER}, #{fid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{addIp,jdbcType=INTEGER}, 
+      #{isService,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{deleted,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qnz.bms.domain.UserRole">
+    insert into user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="fid != null">
+        fid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="addIp != null">
+        add_ip,
+      </if>
+      <if test="isService != null">
+        is_service,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="deptCode != null">
+        dept_code,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="fid != null">
+        #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="addIp != null">
+        #{addIp,jdbcType=INTEGER},
+      </if>
+      <if test="isService != null">
+        #{isService,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="deptCode != null">
+        #{deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qnz.bms.domain.UserRoleExample" resultType="java.lang.Long">
+    select count(*) from user_role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_role
+    <set>
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fid != null">
+        fid = #{record.fid,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null">
+        sort = #{record.sort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.addIp != null">
+        add_ip = #{record.addIp,jdbcType=INTEGER},
+      </if>
+      <if test="record.isService != null">
+        is_service = #{record.isService,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptCode != null">
+        dept_code = #{record.deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=INTEGER},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_role
+    set role_id = #{record.roleId,jdbcType=INTEGER},
+      fid = #{record.fid,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      add_ip = #{record.addIp,jdbcType=INTEGER},
+      is_service = #{record.isService,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      dept_code = #{record.deptCode,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      deleted = #{record.deleted,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qnz.bms.domain.UserRole">
+    update user_role
+    <set>
+      <if test="fid != null">
+        fid = #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="addIp != null">
+        add_ip = #{addIp,jdbcType=INTEGER},
+      </if>
+      <if test="isService != null">
+        is_service = #{isService,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="deptCode != null">
+        dept_code = #{deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qnz.bms.domain.UserRole">
+    update user_role
+    set fid = #{fid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      add_ip = #{addIp,jdbcType=INTEGER},
+      is_service = #{isService,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      dept_code = #{deptCode,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+</mapper>

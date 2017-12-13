@@ -1,0 +1,1165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qnz.bms.mapper.SystemUserMapper">
+  <resultMap id="BaseResultMap" type="com.qnz.bms.domain.SystemUser">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="add_ip" jdbcType="INTEGER" property="addIp" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="pay_password" jdbcType="VARCHAR" property="payPassword" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="islock" jdbcType="INTEGER" property="islock" />
+    <result column="lock_time" jdbcType="TIMESTAMP" property="lockTime" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="login_fail_times" jdbcType="INTEGER" property="loginFailTimes" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    user_id, role_id, add_ip, username, password, pay_password, realname, phone, islock, 
+    lock_time, login_time, email, qq, login_fail_times, deleted, add_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.qnz.bms.domain.SystemUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from system_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from system_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from system_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qnz.bms.domain.SystemUserExample">
+    delete from system_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qnz.bms.domain.SystemUser">
+    insert into system_user (user_id, role_id, add_ip, 
+      username, password, pay_password, 
+      realname, phone, islock, 
+      lock_time, login_time, email, 
+      qq, login_fail_times, deleted, 
+      add_time, update_time)
+    values (#{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{addIp,jdbcType=INTEGER}, 
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, 
+      #{realname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{islock,jdbcType=INTEGER}, 
+      #{lockTime,jdbcType=TIMESTAMP}, #{loginTime,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{loginFailTimes,jdbcType=INTEGER}, #{deleted,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qnz.bms.domain.SystemUser">
+    insert into system_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="addIp != null">
+        add_ip,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="payPassword != null">
+        pay_password,
+      </if>
+      <if test="realname != null">
+        realname,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="islock != null">
+        islock,
+      </if>
+      <if test="lockTime != null">
+        lock_time,
+      </if>
+      <if test="loginTime != null">
+        login_time,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="loginFailTimes != null">
+        login_fail_times,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="addIp != null">
+        #{addIp,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null">
+        #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="islock != null">
+        #{islock,jdbcType=INTEGER},
+      </if>
+      <if test="lockTime != null">
+        #{lockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginTime != null">
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="loginFailTimes != null">
+        #{loginFailTimes,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qnz.bms.domain.SystemUserExample" resultType="java.lang.Long">
+    select count(*) from system_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update system_user
+    <set>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.addIp != null">
+        add_ip = #{record.addIp,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payPassword != null">
+        pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realname != null">
+        realname = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.islock != null">
+        islock = #{record.islock,jdbcType=INTEGER},
+      </if>
+      <if test="record.lockTime != null">
+        lock_time = #{record.lockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.loginTime != null">
+        login_time = #{record.loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null">
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginFailTimes != null">
+        login_fail_times = #{record.loginFailTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=INTEGER},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update system_user
+    set user_id = #{record.userId,jdbcType=INTEGER},
+      role_id = #{record.roleId,jdbcType=INTEGER},
+      add_ip = #{record.addIp,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      realname = #{record.realname,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      islock = #{record.islock,jdbcType=INTEGER},
+      lock_time = #{record.lockTime,jdbcType=TIMESTAMP},
+      login_time = #{record.loginTime,jdbcType=TIMESTAMP},
+      email = #{record.email,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      login_fail_times = #{record.loginFailTimes,jdbcType=INTEGER},
+      deleted = #{record.deleted,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qnz.bms.domain.SystemUser">
+    update system_user
+    <set>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="addIp != null">
+        add_ip = #{addIp,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null">
+        pay_password = #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="islock != null">
+        islock = #{islock,jdbcType=INTEGER},
+      </if>
+      <if test="lockTime != null">
+        lock_time = #{lockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginTime != null">
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="loginFailTimes != null">
+        login_fail_times = #{loginFailTimes,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qnz.bms.domain.SystemUser">
+    update system_user
+    set role_id = #{roleId,jdbcType=INTEGER},
+      add_ip = #{addIp,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      pay_password = #{payPassword,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      islock = #{islock,jdbcType=INTEGER},
+      lock_time = #{lockTime,jdbcType=TIMESTAMP},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      email = #{email,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      login_fail_times = #{loginFailTimes,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.qnz.bms.domain.SystemUser">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="add_ip" jdbcType="INTEGER" property="addIp" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="pay_password" jdbcType="VARCHAR" property="payPassword" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="islock" jdbcType="INTEGER" property="islock" />
+    <result column="lock_time" jdbcType="TIMESTAMP" property="lockTime" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="login_fail_times" jdbcType="INTEGER" property="loginFailTimes" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    user_id, role_id, add_ip, username, password, pay_password, realname, phone, islock, 
+    lock_time, login_time, email, qq, login_fail_times, deleted, add_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.qnz.bms.domain.SystemUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from system_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from system_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from system_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qnz.bms.domain.SystemUserExample">
+    delete from system_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qnz.bms.domain.SystemUser">
+    insert into system_user (user_id, role_id, add_ip, 
+      username, password, pay_password, 
+      realname, phone, islock, 
+      lock_time, login_time, email, 
+      qq, login_fail_times, deleted, 
+      add_time, update_time)
+    values (#{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{addIp,jdbcType=INTEGER}, 
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, 
+      #{realname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{islock,jdbcType=INTEGER}, 
+      #{lockTime,jdbcType=TIMESTAMP}, #{loginTime,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{loginFailTimes,jdbcType=INTEGER}, #{deleted,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qnz.bms.domain.SystemUser">
+    insert into system_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="addIp != null">
+        add_ip,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="payPassword != null">
+        pay_password,
+      </if>
+      <if test="realname != null">
+        realname,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="islock != null">
+        islock,
+      </if>
+      <if test="lockTime != null">
+        lock_time,
+      </if>
+      <if test="loginTime != null">
+        login_time,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="loginFailTimes != null">
+        login_fail_times,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="addIp != null">
+        #{addIp,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null">
+        #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="islock != null">
+        #{islock,jdbcType=INTEGER},
+      </if>
+      <if test="lockTime != null">
+        #{lockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginTime != null">
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="loginFailTimes != null">
+        #{loginFailTimes,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qnz.bms.domain.SystemUserExample" resultType="java.lang.Long">
+    select count(*) from system_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update system_user
+    <set>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.addIp != null">
+        add_ip = #{record.addIp,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payPassword != null">
+        pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realname != null">
+        realname = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.islock != null">
+        islock = #{record.islock,jdbcType=INTEGER},
+      </if>
+      <if test="record.lockTime != null">
+        lock_time = #{record.lockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.loginTime != null">
+        login_time = #{record.loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null">
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginFailTimes != null">
+        login_fail_times = #{record.loginFailTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=INTEGER},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update system_user
+    set user_id = #{record.userId,jdbcType=INTEGER},
+      role_id = #{record.roleId,jdbcType=INTEGER},
+      add_ip = #{record.addIp,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      realname = #{record.realname,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      islock = #{record.islock,jdbcType=INTEGER},
+      lock_time = #{record.lockTime,jdbcType=TIMESTAMP},
+      login_time = #{record.loginTime,jdbcType=TIMESTAMP},
+      email = #{record.email,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      login_fail_times = #{record.loginFailTimes,jdbcType=INTEGER},
+      deleted = #{record.deleted,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qnz.bms.domain.SystemUser">
+    update system_user
+    <set>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="addIp != null">
+        add_ip = #{addIp,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null">
+        pay_password = #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="islock != null">
+        islock = #{islock,jdbcType=INTEGER},
+      </if>
+      <if test="lockTime != null">
+        lock_time = #{lockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginTime != null">
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="loginFailTimes != null">
+        login_fail_times = #{loginFailTimes,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qnz.bms.domain.SystemUser">
+    update system_user
+    set role_id = #{roleId,jdbcType=INTEGER},
+      add_ip = #{addIp,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      pay_password = #{payPassword,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      islock = #{islock,jdbcType=INTEGER},
+      lock_time = #{lockTime,jdbcType=TIMESTAMP},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      email = #{email,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      login_fail_times = #{loginFailTimes,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.qnz.bms.domain.SystemUser">
+    <id column="su_user_id" jdbcType="INTEGER" property="userId" />
+    <result column="su_add_ip" jdbcType="VARCHAR" property="addIp" />
+    <result column="su_username" jdbcType="VARCHAR" property="username" />
+    <result column="su_password" jdbcType="VARCHAR" property="password" />
+    <result column="su_paypassword" jdbcType="VARCHAR" property="paypassword" />
+    <result column="su_realname" jdbcType="VARCHAR" property="realname" />
+    <result column="su_phone" jdbcType="VARCHAR" property="phone" />
+    <result column="su_islock" jdbcType="INTEGER" property="islock" />
+    <result column="su_lock_time" jdbcType="TIMESTAMP" property="lockTime" />
+    <result column="su_login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="su_email" jdbcType="VARCHAR" property="email" />
+    <result column="su_qq" jdbcType="VARCHAR" property="qq" />
+    <result column="su_login_fail_times" jdbcType="INTEGER" property="loginFailTimes" />
+    <result column="su_add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="su_update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    su.user_id as su_user_id, su.add_ip as su_add_ip, su.username as su_username, su.password as su_password, 
+    su.paypassword as su_paypassword, su.realname as su_realname, su.phone as su_phone, 
+    su.islock as su_islock, su.lock_time as su_lock_time, su.login_time as su_login_time, 
+    su.email as su_email, su.qq as su_qq, su.login_fail_times as su_login_fail_times, 
+    su.add_time as su_add_time, su.update_time as su_update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.qnz.bms.domain.SystemUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from system_user su
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from system_user su
+    where su.user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from system_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qnz.bms.domain.SystemUserExample">
+    delete from system_user su
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qnz.bms.domain.SystemUser">
+    insert into system_user (user_id, add_ip, username, 
+      password, paypassword, realname, 
+      phone, islock, lock_time, 
+      login_time, email, qq, 
+      login_fail_times, add_time, update_time
+      )
+    values (#{userId,jdbcType=INTEGER}, #{addIp,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{paypassword,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{islock,jdbcType=INTEGER}, #{lockTime,jdbcType=TIMESTAMP}, 
+      #{loginTime,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
+      #{loginFailTimes,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qnz.bms.domain.SystemUser">
+    insert into system_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="addIp != null">
+        add_ip,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="paypassword != null">
+        paypassword,
+      </if>
+      <if test="realname != null">
+        realname,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="islock != null">
+        islock,
+      </if>
+      <if test="lockTime != null">
+        lock_time,
+      </if>
+      <if test="loginTime != null">
+        login_time,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="loginFailTimes != null">
+        login_fail_times,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="addIp != null">
+        #{addIp,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="paypassword != null">
+        #{paypassword,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="islock != null">
+        #{islock,jdbcType=INTEGER},
+      </if>
+      <if test="lockTime != null">
+        #{lockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginTime != null">
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="loginFailTimes != null">
+        #{loginFailTimes,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qnz.bms.domain.SystemUserExample" resultType="java.lang.Long">
+    select count(*) from system_user su
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update system_user su
+    <set>
+      <if test="record.userId != null">
+        su.user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.addIp != null">
+        su.add_ip = #{record.addIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null">
+        su.username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        su.password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paypassword != null">
+        su.paypassword = #{record.paypassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realname != null">
+        su.realname = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        su.phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.islock != null">
+        su.islock = #{record.islock,jdbcType=INTEGER},
+      </if>
+      <if test="record.lockTime != null">
+        su.lock_time = #{record.lockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.loginTime != null">
+        su.login_time = #{record.loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.email != null">
+        su.email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null">
+        su.qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginFailTimes != null">
+        su.login_fail_times = #{record.loginFailTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.addTime != null">
+        su.add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        su.update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update system_user su
+    set su.user_id = #{record.userId,jdbcType=INTEGER},
+      su.add_ip = #{record.addIp,jdbcType=VARCHAR},
+      su.username = #{record.username,jdbcType=VARCHAR},
+      su.password = #{record.password,jdbcType=VARCHAR},
+      su.paypassword = #{record.paypassword,jdbcType=VARCHAR},
+      su.realname = #{record.realname,jdbcType=VARCHAR},
+      su.phone = #{record.phone,jdbcType=VARCHAR},
+      su.islock = #{record.islock,jdbcType=INTEGER},
+      su.lock_time = #{record.lockTime,jdbcType=TIMESTAMP},
+      su.login_time = #{record.loginTime,jdbcType=TIMESTAMP},
+      su.email = #{record.email,jdbcType=VARCHAR},
+      su.qq = #{record.qq,jdbcType=VARCHAR},
+      su.login_fail_times = #{record.loginFailTimes,jdbcType=INTEGER},
+      su.add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      su.update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qnz.bms.domain.SystemUser">
+    update system_user
+    <set>
+      <if test="addIp != null">
+        add_ip = #{addIp,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="paypassword != null">
+        paypassword = #{paypassword,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="islock != null">
+        islock = #{islock,jdbcType=INTEGER},
+      </if>
+      <if test="lockTime != null">
+        lock_time = #{lockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginTime != null">
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="loginFailTimes != null">
+        login_fail_times = #{loginFailTimes,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qnz.bms.domain.SystemUser">
+    update system_user
+    set add_ip = #{addIp,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      paypassword = #{paypassword,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      islock = #{islock,jdbcType=INTEGER},
+      lock_time = #{lockTime,jdbcType=TIMESTAMP},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      email = #{email,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      login_fail_times = #{loginFailTimes,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>
