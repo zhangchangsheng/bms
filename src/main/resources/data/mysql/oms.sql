@@ -4,8 +4,8 @@ CREATE TABLE system_user (
   user_id INT(11) NOT NULL AUTO_INCREMENT COMMENT '用户id',
   role_id INT(11) NOT NULL COMMENT '角色id',
   add_ip INT(11) UNSIGNED DEFAULT '0' COMMENT '添加ip',
-  username VARCHAR(64) DEFAULT '' COMMENT '登录名称',
-  password VARCHAR(64) DEFAULT '' COMMENT '登录密码',
+  username VARCHAR(32) DEFAULT '' COMMENT '登录名称',
+  password VARCHAR(32) DEFAULT '' COMMENT '登录密码',
   pay_password VARCHAR(64) DEFAULT '' COMMENT '支付密码',
   realname VARCHAR(32) DEFAULT '' COMMENT '姓名',
   phone VARCHAR(16) DEFAULT '' COMMENT '手机号码',
@@ -20,6 +20,9 @@ CREATE TABLE system_user (
   update_time DATETIME NOT NULL COMMENT '更新时间',
   PRIMARY KEY (user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台用户表';
+
+-- 密码 12345678
+INSERT INTO system_user VALUES (1,1,0,'admin_super','e42584918d922300a0498dbb6e89745d',NULL ,'admin',null,0,null,null,null,null,0,0,now(),now());
 
 DROP TABLE IF EXISTS purview;
 CREATE TABLE purview (
@@ -56,6 +59,7 @@ CREATE TABLE user_role (
   update_time DATETIME NOT NULL COMMENT '更新时间',
   PRIMARY KEY (role_id) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
+INSERT INTO user_role VALUES (1,1,'超级管理员',1,0,0,1,'10000001','100000',NULL ,0,now(),now());
 
 DROP TABLE IF EXISTS user_role_purview;
 CREATE TABLE user_role_purview (

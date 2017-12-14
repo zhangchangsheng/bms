@@ -8,7 +8,7 @@ Configuration:
       - name: log.level.console
         value: trace
       - name: log.level.bms
-        value: trace
+        value: info
       - name: log.path
         value: D:/slog
       - name: project.name
@@ -43,8 +43,8 @@ Configuration:
       AppenderRef:
         - ref: CONSOLE
         - ref: ROLLING_FILE
-    Logger: # 为com.qnz.bms.service包配置特殊的Log级别，方便调试
-      - name: com.qnz.bms.service
+    Logger: # 为com.qnz.bms.controller 包配置特殊的Log级别，方便调试
+      - name: com.qnz.bms.controller
         additivity: false
         level: ${sys:log.level.bms}
         AppenderRef:

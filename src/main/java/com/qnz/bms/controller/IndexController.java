@@ -1,60 +1,56 @@
 package com.qnz.bms.controller;
 
-import com.qnz.bms.domain.SystemUser;
-import com.qnz.bms.service.SystemUserService;
 import com.qnz.common.utils.IPUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class IndexController {
 
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-    @Autowired
-    private SystemUserService userService;
-
-    @RequestMapping("/index")
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(){
         logger.info(IPUtils.ipToLong("127.0.0.1")+"");
-        return "hello world";
+        return "index";
     }
 
-    @RequestMapping("/getUserById")
-    public SystemUser getUserById(@RequestParam int userId){
-        SystemUser user = userService.findByUserId(userId);
-        return user;
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(){
+        String hashAlgorithmName = "MD5";
+        String credentials = "12345678";
+        Object obj = new SimpleHash(hashAlgorithmName, credentials,null,2);
+        logger.info(obj.toString());
+        return "login";
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
+    @RequestMapping(value = "/auth", method = RequestMethod.POST)
+    public String auth(@RequestParam("username") String username, @RequestParam("password") String password) {
         Subject currentUser = SecurityUtils.getSubject();
         if (!currentUser.isAuthenticated()) {
             UsernamePasswordToken upToken = new UsernamePasswordToken(username, password);
             upToken.setRememberMe(false);
             try {
                 currentUser.login(upToken);
-                return "user/index";
+                return "redirect:/index";
             } catch (IncorrectCredentialsException ice) {
-                System.out.println("邮箱/密码不匹配！");
+                logger.info("账号/密码不匹配！");
             } catch (LockedAccountException lae) {
-                System.out.println("账户已被冻结！");
-            } catch (AuthenticationException ae) {
-                System.out.println(ae.getMessage());
+                logger.info("账户已被冻结！");
+            } catch (ExcessiveAttemptsException eae){
+                logger.info("账户密码错误超过5次！");
+            }catch (AuthenticationException ae) {
+                logger.info(ae.getMessage());
             }
         }
-        return "redirect:/login.jsp";
+        return "redirect:/login";
     }
 }

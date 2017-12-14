@@ -4,7 +4,11 @@ import com.qnz.bms.domain.SystemUser;
 
 public interface SystemUserService {
 
-    public SystemUser findByUserId(int userId);
+    SystemUser findByUserId(int userId);
 
-    public SystemUser findByUsername(String username);
+    SystemUser findByUsername(String username);
+
+    void loginSuccess(Integer userId);
+
+    boolean loginFailAndLock(Integer userId);
 }

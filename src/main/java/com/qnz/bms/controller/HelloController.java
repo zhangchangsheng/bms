@@ -17,6 +17,7 @@ public class HelloController {
     public String hello(Model model){
         String ipString = "127.0.0.1";
         long ipLong = IPUtils.ipToLong(ipString);
+        logger.info(ipString);
         model.addAttribute("ip",ipString);
         model.addAttribute("number",ipLong);
         return "hello";

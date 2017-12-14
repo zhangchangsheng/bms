@@ -73,18 +73,21 @@ public class MyShiroRealm extends AuthorizingRealm {
         UsernamePasswordToken upToken = (UsernamePasswordToken) authenticationToken;
         // 获取用户输入的账号
         String username = upToken.getUsername();
-        // 获得用户输入的密码
-        String password = String.valueOf(upToken.getPassword());
         // 通过 username 从数据库中查找 SystemUser对象，如果找到，没找到.
         // 实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
         SystemUser user = systemUserService.findByUsername(username);
         if (user == null) {
             logger.info("----->>username[" + username + "]不存在");
-            return null;
+            // 抛出 帐号找不到异常
+            throw new UnknownAccountException();
         }
-        ByteSource credentialsSalt = ByteSource.Util.bytes(username);
+        if (user.getIslock() != 0) {
+            // 抛出 帐号锁定异常
+            throw new LockedAccountException();
+        }
+//        ByteSource credentialsSalt = ByteSource.Util.bytes(username);
         // 验证密码
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username, password.toCharArray(), credentialsSalt, getName());
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username, user.getPassword().toCharArray(), getName());
         return authenticationInfo;
     }
 }

@@ -39,6 +39,8 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/static/**", "anon");
         // 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");
+        // 配置登录不会被拦截的链接 顺序判断
+        filterChainDefinitionMap.put("/auth", "anon");
         // 过滤链定义，从上向下顺序执行，一般将/**放在最为下边  这是一个坑呢，一不小心代码就不好使了;
         filterChainDefinitionMap.put("/**", "authc");
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
@@ -52,12 +54,12 @@ public class ShiroConfiguration {
     }
 
     /**
-     * 凭证匹配器（由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了 ）
+     *
      * @return
      */
     @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher(){
-        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        HashedCredentialsMatcher hashedCredentialsMatcher = new MyHashedCredentialsMatcher();
         hashedCredentialsMatcher.setHashAlgorithmName("md5");//散列算法:这里使用MD5算法;
         hashedCredentialsMatcher.setHashIterations(2);//散列的次数，比如散列两次，相当于 md5(md5(""));
         return hashedCredentialsMatcher;
@@ -78,6 +80,7 @@ public class ShiroConfiguration {
     @Bean
     public MyShiroRealm myShiroRealm() {
         MyShiroRealm myShiroRealm = new MyShiroRealm();
+        myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return myShiroRealm;
     }
 

@@ -93,4 +93,6 @@ public interface PurviewMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(Purview record);
+
+    List<Purview> selectByRoleId(@Param("roleId") Integer roleId);
 }
