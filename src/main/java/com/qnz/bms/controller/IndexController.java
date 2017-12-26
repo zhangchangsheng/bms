@@ -20,6 +20,7 @@ public class IndexController {
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(){
         logger.info(IPUtils.ipToLong("127.0.0.1")+"");
+
         return "index";
     }
 

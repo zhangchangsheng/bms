@@ -71,4 +71,12 @@ public class SystemUserServiceImpl implements SystemUserService {
         mapper.updateByPrimaryKeySelective(record);
         return isLock;
     }
+
+    @Override
+    public List<SystemUser> find(SystemUserExample example ,Integer pageNum, Integer pageSize) {
+        pageNum = pageNum == null ? 1 : pageNum;
+        pageSize = pageSize == null ? 10 : pageSize;
+        List<SystemUser> list = mapper.selectByExample(example);
+        return list;
+    }
 }
