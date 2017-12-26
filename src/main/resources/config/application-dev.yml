@@ -39,8 +39,6 @@ spring:
     content-type: text/html
     cache: false
 
-
-
 mybatis:
   typeAliasesPackage: com.qnz.bms.domain
   mapperLocations: classpath:mybatis/mapper/*.xml
